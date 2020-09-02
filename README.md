@@ -12,7 +12,7 @@ Currently creates management groups and defines the custom policies. Policy assi
 
 ## Example terraform.tfvars
 
-```json
+```hcl
 prefix = "estst"
 
 #==============================================================================
