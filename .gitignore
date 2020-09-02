@@ -13,8 +13,8 @@ crash.log
 # version control.
 #
 # example.tfvars
-override.tfvars
-*.override.tfvars
+override.auto.tfvars
+override.*.auto.tfvars
 
 # Ignore override files as they are usually used to override resources locally and so
 # are not checked in
