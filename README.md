@@ -1,4 +1,4 @@
-# terrafrom-enterprisescale
+# terraform-enterprisescale
 
 ## Description
 
