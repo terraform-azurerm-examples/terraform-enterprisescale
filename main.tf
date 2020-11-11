@@ -1,23 +1,18 @@
-locals {
-  management_subscription_id   = var.management_subscription_id != null ? [var.management_subscription_id] : []
-  landing_zone_subscription_id = var.landing_zone_subscription_id != null ? [var.landing_zone_subscription_id] : []
-}
+locals {}
 
 module "management_groups" {
-  source = "github.com/terraform-azurerm-modules/terraform-azurerm-management-groups?ref=v0.1.3"
+  source = "github.com/terraform-azurerm-modules/terraform-azurerm-management-groups?ref=v0.2.0"
+
+  subscription_to_mg_csv_data  = csvdecode(file("sub2mg.csv"))
 
   management_groups = {
     (var.prefix) = {
       "${var.prefix}-decommissioned" = {},
       "${var.prefix}-landingzones" = {
-        "${var.prefix}-online" = {
-          "subscription_ids" = local.landing_zone_subscription_id
-        }
+        "${var.prefix}-online" = {}
       },
       "${var.prefix}-platform" = {
-        "${var.prefix}-management" = {
-          "subscription_ids" = local.management_subscription_id
-        }
+        "${var.prefix}-management" = {}
         "${var.prefix}-connectivity" = {}
         "${var.prefix}-identity"     = {}
       },
@@ -27,6 +22,6 @@ module "management_groups" {
 }
 
 module "azopsreference" {
-  source                = "github.com/terraform-azurerm-modules/terraform-azurerm-azopsreference?ref=v0.2.0"
+  source                = "github.com/terraform-azurerm-modules/terraform-azurerm-azopsreference?ref=v0.4.0"
   management_group_name = module.management_groups.output[var.prefix].name
 }
